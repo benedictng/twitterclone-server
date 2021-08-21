@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const { Users } = require("../models");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const { sign } = require("jsonwebtoken")
 const { validateToken } = require('../middlewares/authMiddleware')
 
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
-  bcrypt.hash(password, 10).then((hash) => {
+  bcryptjs.hash(password, 10).then((hash) => {
     Users.create({
       username: username,
       password: hash,
@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
 
   if (!user) res.json({ error: "User Doesn't Exist" });
 
-  bcrypt.compare(password, user.password).then((match) => {
+  bcryptjsjs.compare(password, user.password).then((match) => {
     if (!match) res.json({ error: "Wrong Username And Password Combination" });
 
     const accessToken = sign({username: user.username, id:user.id},"importantsecret")
@@ -49,10 +49,10 @@ router.put("/changepassword", validateToken, async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   const user = await Users.findOne({ where: { username: req.user.username } });
 
-  bcrypt.compare(oldPassword, user.password).then(async (match) => {
+  bcryptjs.compare(oldPassword, user.password).then(async (match) => {
     if (!match) res.json({ error: "Wrong Password Entered!" });
 
-    bcrypt.hash(newPassword, 10).then((hash) => {
+    bcryptjs.hash(newPassword, 10).then((hash) => {
       Users.update(
         { password: hash },
         { where: { username: req.user.username } }

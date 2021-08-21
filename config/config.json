@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "tutorialdb",
-    "host": "127.0.0.1",
+    "username": "b1255e03d6b87a",
+    "password": "b3d513c3",
+    "database": "heroku_bdbb4b4955e85b8",
+    "host": "us-cdbr-east-04.cleardb.com",
     "dialect": "mysql"
   }
 }
